@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const asyncHandler = require('express-async-handler');
 const userController = require("../controllers/UserController");
-const authenticate = require('../middleware/authanticationtoken')
+const authenticate = require("../middleware/Authanticationtoken");
 
 const userRouter = Router()
 
