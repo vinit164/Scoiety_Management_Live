@@ -47,6 +47,20 @@ class EventDetailsController {
       return res.status(500).send({ message: "Internal server error" });
     }
   }
+  
+  async UserEvent(req, res) {
+    try {
+      const { memberId } = req.params;
+      const result = await eventDetailsModel.model.find({ memberId: memberId})
+      if (!result || result.length === 0) {
+        return res.status(404).send({ message: "No completed events found for this member" });
+      }
+      return res.status(200).send({ message: httpSuccess, data: result });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send({ message: "Internal server error" });
+    }
+  }
 
   async getEventDetailsById(req, res) {
     try {

@@ -22,4 +22,6 @@ maintenanceDetailsRouter.get("/penalty/:societyId", asyncHandler(maintenanceDeta
 
 maintenanceDetailsRouter.get("/allpending/:societyId", asyncHandler(maintenanceDetailsController.allPendingMaintenance))
 
+maintenanceDetailsRouter.get("/user-maintan/:memberId", asyncHandler(maintenanceDetailsController.UserMaintenance))
+
 module.exports = maintenanceDetailsRouter

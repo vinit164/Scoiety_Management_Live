@@ -8,11 +8,8 @@ const userModel = require("../models/UserModel");
 class MemberController {
   async createMember(req, res) {
     try {
-      console.log("Request Body:", JSON.stringify(req.body, null, 2));
-console.log("Uploaded Files:", JSON.stringify(req.files, null, 2));
       console.log("body =====> ", req.body)
       console.log("files =====> ", req.files)
-      return
       let { societyId, residentStatus, fullName, email, phoneNumber, age, wing, unit, familyMember, vehicle, OwnerInfo, gender } = req.body;
       let { profileImage, aadharFront, aadharBack, veraBill, agreement } = req.files;
 

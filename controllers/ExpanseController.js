@@ -37,7 +37,7 @@ class ExpanseController {
         TotalExpanse += result[i].amount;
       }
 
-      return res.status(200).send({ message: "httpSuccess", data: TotalExpanse });
+      return res.status(200).send({ message: "httpSuccess", data: { data: result, TotalExpanse} });
     } catch (error) {
       console.error(error);
       return res.status(500).send({ message: "Internal server error" });

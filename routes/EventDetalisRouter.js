@@ -10,5 +10,6 @@ eventDetailsRouter.put("/update", asyncHandler(eventDetilsController.updateEvent
 eventDetailsRouter.get("/listbymember/:id", asyncHandler(eventDetilsController.getEventDetailsById))
 // eventDetailsRouter.post("/listbymember", asyncHandler(eventDetilsController.getEventDetailsById))
 eventDetailsRouter.get("/complete/:memberId", asyncHandler(eventDetilsController.completedEvent))
+eventDetailsRouter.get("/user-event/:memberId", asyncHandler(eventDetilsController.UserEvent))
 
 module.exports = eventDetailsRouter

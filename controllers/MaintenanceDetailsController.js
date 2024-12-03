@@ -72,7 +72,7 @@ class MaintenanceDetailsController {
   async allPendingMaintenance(req, res) {
     try {
       const { societyId } = req.params;
-      const result = await maintenanceDetailsModel.model.find({societyId : societyId ,paymentStatus: "Pending" }).populate([{ path: "memberId", populate: { path: "userId" } }, { path: "maintenanceId" }]);
+      const result = await maintenanceDetailsModel.model.find({societyId : societyId ,penaltyAmount: { $gt: 0 } }).populate([{ path: "memberId", populate: { path: "userId" } }, { path: "maintenanceId" }]);
       if (!result || result.length === 0) {
         return res.status(404).send({ message: "No due maintenance found" });
       }
@@ -134,29 +134,48 @@ class MaintenanceDetailsController {
     }
   }
 
-    async getTotalPenaltyAmount(req, res) {
-      try {
-        const result = await maintenanceDetailsModel.model.find();
-  
-        if (!result || result.length === 0) {
-          return res.status(404).send({ message: 'No maintenance records found' });
-        }
-  
-        let totalPenaltyAmount = 0;
-  
-        for (let i = 0; i < result.length; i++) {
-          totalPenaltyAmount += result[i].penaltyAmount; 
-        }
-  
-        return res.status(200).send({
-          message: httpSuccess,
-          data: totalPenaltyAmount
-        });
-      } catch (error) {
-        console.error(error);
-        return res.status(500).send({ message: 'Internal Server Error' });
+  async getTotalPenaltyAmount(req, res) {
+    try {
+      const result = await maintenanceDetailsModel.model.find();
+
+      if (!result || result.length === 0) {
+        return res.status(404).send({ message: 'No maintenance records found' });
       }
+
+      let totalPenaltyAmount = 0;
+
+      for (let i = 0; i < result.length; i++) {
+        totalPenaltyAmount += result[i].penaltyAmount; 
+      }
+
+      return res.status(200).send({
+        message: httpSuccess,
+        data: totalPenaltyAmount
+      });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send({ message: 'Internal Server Error' });
     }
+  }
+
+  async UserMaintenance(req, res) {
+    try {
+      const {memberId} = req.params
+      const maintenanceDetails = await maintenanceDetailsModel.model.find({memberId : memberId})
+      const pendingMaintenance = await maintenanceDetailsModel.model.find({ memberId: memberId, penaltyAmount: { $gt: 0 } });
+      const dueMaintenance = await maintenanceDetailsModel.model.find({ memberId: memberId, paymentStatus:"Pending"});
+
+      const responseData = {
+        maintenance : maintenanceDetails,
+        pendingMaintenance : pendingMaintenance ,
+        dueMaintenance : dueMaintenance 
+      }
+      return res.status(200).json({ message: "User details fetch successfully.", data : responseData });  
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send({ message: 'Internal Server Error' });
+    }
+  }
 
 
   async updateMaintenanceDetails(req, res) {

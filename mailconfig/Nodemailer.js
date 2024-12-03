@@ -3,15 +3,18 @@ const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
   service: 'gmail', 
   auth: {
-    user: 'kanjiyaparas2002@gmail.com', 
-    pass: 'nivl zjrk kpmw hhnj',  
+    user: 'patelvinit135@gmail.com', 
+    pass: 'yhnw ntph esma psib',  
+  },
+  tls: {
+    rejectUnauthorized: false, // Ignore self-signed certificate issues
   },
 });
 
 const sendEmail = async ({to , subject, text}) => {
   try {
     const info = await transporter.sendMail({
-      from: 'kanjiyaparas2002@gmail.com', 
+      from: 'patelvinit135@gmail.com', 
       to : to,
       subject: subject,
       text : text ,
