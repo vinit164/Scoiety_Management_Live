@@ -5,7 +5,7 @@ const complaintController = require("../controllers/ComplaintController");
 const complaintRouter = Router()
 
 complaintRouter.post("/create", asyncHandler(complaintController.createComplaint))
-complaintRouter.get("/list", asyncHandler(complaintController.listAllComplain))
+complaintRouter.post("/list", asyncHandler(complaintController.listAllComplain))
 complaintRouter.put("/update/:id", asyncHandler(complaintController.updateComplaint))
 complaintRouter.delete("/delete/:id", asyncHandler(complaintController.deleteComplain))
 complaintRouter.get("/listComplain/:societyId", asyncHandler(complaintController.listComplain))

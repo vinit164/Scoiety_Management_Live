@@ -6,8 +6,6 @@ class SecurityProtocolModel {
       societyId: { type: String, required: true, ref: 'tbl_societies' },
       title: { type: String, required: true },
       discription: { type: String, required: true },
-      date: { type: String, required: true },
-      time: { type: String, required: true }
     }, { timestamps: true })
 
     this.model = mongoose.model("tbl_securityprotocols", this.schema)

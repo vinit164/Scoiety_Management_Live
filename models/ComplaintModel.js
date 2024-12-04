@@ -3,7 +3,6 @@ const { default: mongoose } = require("mongoose");
 class ComplaintModel {
   constructor() {
     this.schema = mongoose.Schema({
-      memberId: { type: mongoose.Types.ObjectId, required: true, ref: "tbl_members" },
       societyId: { type: mongoose.Types.ObjectId, ref: "tbl_societies", required: true },
       complainerName: { type: String, required: true },
       complaintName: { type: String, required: true },

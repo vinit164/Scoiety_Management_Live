@@ -4,8 +4,8 @@ const complaintModel = require("../models/ComplaintModel");
 class ComplaintController {
   async createComplaint(req, res) {
     try {
-      const { memberId, societyId ,complainerName, complaintName, discription, wingId, unitId, priorityStatus, complaintype } = req.body;
-      if (!memberId || !societyId || !complainerName || !complaintName || !discription || !wingId || !unitId || !priorityStatus || !complaintype) {
+      const { societyId, complainerName, complaintName, discription, wingId, unitId, priorityStatus, complaintype } = req.body;
+      if (!societyId || !complainerName || !complaintName || !discription || !wingId || !unitId || !priorityStatus || !complaintype) {
         return res.status(400).json({ message: "Missing required fields. Please provide all the necessary information." });
       }
 
@@ -27,7 +27,6 @@ class ComplaintController {
       if (!id) {
         return res.status(400).json({ message: "Complaint ID is required." });
       }
-
       const result = await complaintModel.model.updateOne({ _id: id }, { ...req.body });
       if (!result || result.modifiedCount === 0) {
         return res.status(404).json({ message: "Complaint not found or no changes were made." });
@@ -66,7 +65,7 @@ class ComplaintController {
         return res.status(400).json({ message: "Society ID and complaint type are required." });
       }
 
-      const result = await complaintModel.model.find({ societyId, complaintype: type }).populate([{ path: "memberId", populate: { path: "userId" } },{ path: "wingId" },{ path: "unitId" }, ]);
+      const result = await complaintModel.model.find({ societyId, complaintype: type }).populate([{ path: "wingId" }, { path: "unitId" },]);
 
       if (!result || result.length === 0) {
         return res.status(404).json({ message: "No complaints found for the given society and type." });
@@ -121,7 +120,7 @@ class ComplaintController {
     try {
       const { memberId } = req.params;
       console.log(memberId);
-      
+
       if (!memberId) {
         return res.status(400).json({ message: "Member ID is required." });
       }
