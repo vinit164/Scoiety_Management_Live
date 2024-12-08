@@ -33,7 +33,7 @@ const app = express()
 // }))
 app.use(cors({
   origin: function(origin, callback) {
-    const allowedOrigins = ['http://localhost:5173', 'https://your-production-url.com'];
+    const allowedOrigins = ['http://localhost:5173', 'https://your-production-url.com', 'https://webapp.adtechifyinfotech.com/dashstack'];
     if (allowedOrigins.includes(origin) || !origin) {
       callback(null, true);
     } else {
