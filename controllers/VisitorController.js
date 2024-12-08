@@ -4,10 +4,10 @@ const visitorModel = require('../models/VisitorModel');
 class VisitorController {
   async createvisitor(req, res) {
     try {
-      const { visitorName, time, societyId, wingId, unitId, date, securityId } = req.body;
+      const { visitorName, phoneNumber , time, societyId, wingId, unitId, date, securityId } = req.body;
       console.log(req.body);
 
-      if (!visitorName || !time || !societyId || !unitId || !date || !securityId || !wingId) {
+      if (!visitorName || !phoneNumber || !time || !societyId || !unitId || !date || !securityId || !wingId) {
         return res.status(400).json({ message: 'Missing required fields. Please provide all required information.' });
       }
 

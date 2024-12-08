@@ -13,41 +13,45 @@ class MemberController {
       let { societyId, residentStatus, fullName, email, phoneNumber, age, wing, unit, familyMember, vehicle, OwnerInfo, gender } = req.body;
       let { profileImage, aadharFront, aadharBack, veraBill, agreement } = req.files;
 
-      if (!societyId || !residentStatus || !fullName || !email || !phoneNumber || !age || !gender || !wing || !unit || !profileImage || !aadharFront || !aadharBack || !veraBill || !agreement || !familyMember || !vehicle) throw httpErrors[400];
-      if (residentStatus === "Tenant" && !OwnerInfo) throw httpErrors[400];
+      // Validate required fields
+      if (!societyId || !residentStatus || !fullName || !email || !phoneNumber || !age || !wing || !unit || !profileImage || !aadharFront || !aadharBack || !veraBill || !agreement || !familyMember || !vehicle) {
+        return res.status(400).send({ message: "All required fields must be provid." });
+      }
+
+      // Validate tenant data
+      if (residentStatus === "Tenant" && !OwnerInfo) {
+        return res.status(400).send({ message: "Owner information is required for tenants." });
+      }
+
+      // Parse family members and vehicle details
       familyMember = JSON.parse(familyMember);
       vehicle = JSON.parse(vehicle);
       phoneNumber = Number(phoneNumber);
       age = Number(age);
 
-      // Map family members and convert data types
       familyMember = familyMember.map((member) => ({
         ...member,
         age: Number(member.age),
         phoneNumber: Number(member.phoneNumber),
       }));
 
-      // Generate random password and hash it
       const password = randomstring.generate({ length: 8, charset: "alphabetic" });
       const encryptedPass = bcrypt.hashSync(password, 5);
       if (!encryptedPass) {
         return res.status(500).send({ message: "Error generating password." });
       }
 
-      // Create user for the member
       const user = await userModel.model.create({ fullName, email, password: encryptedPass, phoneNumber, role: "Member" });
       if (!user) {
         return res.status(500).send({ message: "Error creating user." });
       }
 
-      // Upload the files and get paths
       profileImage = profileImage[0].path;
       aadharFront = aadharFront[0].path;
       aadharBack = aadharBack[0].path;
       veraBill = veraBill[0].path;
       agreement = agreement[0].path;
 
-      // Send email with login credentials
       const emailText = `Dear ${fullName},
 
       We have generated a password for your account. Please use the following credentials to log in:
@@ -61,7 +65,6 @@ class MemberController {
       const subject = "Login Credential For Dashstack";
       sendEmail({ to: email, subject, text: emailText });
 
-      // Prepare member data for storage
       const data = {
         userId: user._id,
         residentStatus,

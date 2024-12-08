@@ -4,6 +4,7 @@ class VisitorModel {
   constructor() {
     this.schema = new mongoose.Schema({
       visitorName: { type: String, required: true },
+      phoneNumber: { type: Number, required: true, unique: true },
       time: { type: String, required: true },
       societyId: { type: mongoose.Types.ObjectId, ref: "tbl_societies", required: true },
       securityId: { type: mongoose.Types.ObjectId, ref: 'tbl_Securities', required: true },

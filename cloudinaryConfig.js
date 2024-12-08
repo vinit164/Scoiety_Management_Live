@@ -13,7 +13,7 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: 'society-management', // Folder in Cloudinary where the files will be stored
-    allowed_formats: ['jpg', 'png','pdf','mp4'], // Accepted formats
+    allowed_formats: ['jpg','pdf'], // Accepted formats
   },
 });
 
