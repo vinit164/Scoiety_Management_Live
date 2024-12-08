@@ -1,7 +1,6 @@
 const { Router } = require("express");
 const asyncHandler = require('express-async-handler');
 const userController = require("../controllers/UserController");
-
 const authenticate = require('../middleware/authanticationtoken')
 const multer = require('multer');
 const { storage } = require("../cloudinaryConfig");
