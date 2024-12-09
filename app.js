@@ -34,7 +34,7 @@ const app = express()
 // }))
 app.use(cors({
   origin: function(origin, callback) {
-    const allowedOrigins = ['http://localhost:5173', 'https://scoietymanagement-server.onrender.com', 'https://webapp.adtechifyinfotech.com', 'https://trupesh166.github.io/DashStack/'];
+    const allowedOrigins = ['http://localhost:5173', 'https://scoietymanagement-server.onrender.com', 'https://webapp.adtechifyinfotech.com', 'https://smc-dashstack.web.app/'];
     if (allowedOrigins.includes(origin) || !origin) {
       callback(null, true);
     } else {
