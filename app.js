@@ -28,21 +28,21 @@ const bodyParser = require('body-parser');
 
 dotenv.config()
 const app = express()
-app.use(cors({
-  origin: '*',
-  credentials: true, 
-}))
 // app.use(cors({
-//   origin: function(origin, callback) {
-//     const allowedOrigins = ['http://localhost:5173', 'https://webapp.adtechifyinfotech.com', 'https://smc-dashstack.web.app'];
-//     if (allowedOrigins.includes(origin) || !origin) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-//   credentials: true,
-// }));
+//   origin: '*',
+//   credentials: true, 
+// }))
+app.use(cors({
+  origin: function(origin, callback) {
+    const allowedOrigins = ['http://localhost:5173', 'https://webapp.adtechifyinfotech.com', 'https://smc-dashstack.web.app', 'http://localhost:4173'];
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
