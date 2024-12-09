@@ -1,9 +1,9 @@
 const { Router } = require("express");
 const asyncHandler = require('express-async-handler');
 const userController = require("../controllers/UserController");
-const authanticate = require("../Middleware/Authantication");
 const multer = require('multer');
 const { storage } = require("../cloudinaryConfig");
+const authanticate = require("../Middleware/Authantication");
 const upload = multer({ storage })
 
 const userRouter = Router()

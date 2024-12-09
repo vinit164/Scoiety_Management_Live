@@ -67,7 +67,7 @@ class SecurityController {
 
       const result = await securityModel.model.find({ societyId }).populate([{ path: 'societyId' }, { path: 'userId' }]);
       if (!result || result.length === 0) {
-        return res.status(404).json({ message: "No security personnel found for the given society." });
+        return res.status(405).json({ message: "No security personnel found for the given society." });
       }
 
       return res.status(200).json({ message: httpSuccess, data: result });
@@ -86,7 +86,7 @@ class SecurityController {
 
       let data = await securityModel.model.findOne({ _id: id });
       if (!data) {
-        return res.status(404).json({ message: "Security personnel not found." });
+        return res.status(405).json({ message: "Security personnel not found." });
       }
 
       data = data._doc;
@@ -119,7 +119,7 @@ class SecurityController {
 
       let data = await securityModel.model.findOne({ _id: id });
       if (!data) {
-        return res.status(404).json({ message: "Security personnel not found." });
+        return res.status(405).json({ message: "Security personnel not found." });
       }
 
       data = data._doc;

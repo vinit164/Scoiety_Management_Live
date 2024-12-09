@@ -22,7 +22,7 @@ class MaintenanceController {
 
       const societyMembers = await memberModel.model.find({ societyId: societyId });
       if (!societyMembers || societyMembers.length === 0) {
-        return res.status(404).send({ message: 'No members found for the given society' });
+        return res.status(405).send({ message: 'No members found for the given society' });
       }
 
       await Promise.all(
@@ -55,7 +55,7 @@ class MaintenanceController {
     try {
       const result = await maintenanceModel.model.find();
       if (!result || result.length === 0) {
-        return res.status(404).send({ message: 'No maintenance records found' });
+        return res.status(405).send({ message: 'No maintenance records found' });
       }
 
       let MaintenanceAmount = 0;
@@ -73,7 +73,7 @@ class MaintenanceController {
     try {
       const result = await maintenanceModel.model.find();
       if (!result || result.length === 0) {
-        return res.status(404).send({ message: 'No maintenance records found' });
+        return res.status(405).send({ message: 'No maintenance records found' });
       }
 
       let PenaltyAmount = 0;

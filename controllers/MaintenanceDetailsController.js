@@ -33,7 +33,7 @@ class MaintenanceDetailsController {
         },
       ]);
       if (!result || result.length === 0) {
-        return res.status(404).send({ message: "No maintenance details found" });
+        return res.status(405).send({ message: "No maintenance details found" });
       }
       return res.status(200).send({ message: httpSuccess, data: result });
     } catch (error) {
@@ -47,7 +47,7 @@ class MaintenanceDetailsController {
       const { id } = req.params;
       const result = await maintenanceDetailsModel.model.findOne({ _id: id }).populate([{ path: "memberId", populate: { path: "userId" } }, { path: "maintenanceId" }]);
       if (!result) {
-        return res.status(404).send({ message: "Maintenance details not found" });
+        return res.status(405).send({ message: "Maintenance details not found" });
       }
       return res.status(200).send({ message: httpSuccess, data: result });
     } catch (error) {
@@ -61,7 +61,7 @@ class MaintenanceDetailsController {
       const { memberId } = req.params;
       const result = await maintenanceDetailsModel.model.find({ memberId: memberId, paymentStatus: "Pending" }).populate([{ path: "memberId", populate: { path: "userId" } }, { path: "maintenanceId" }]);
       if (!result || result.length === 0) {
-        return res.status(404).send({ message: "No due maintenance found" });
+        return res.status(405).send({ message: "No due maintenance found" });
       }
       return res.status(200).send({ message: httpSuccess, data: result });
     } catch (error) {
@@ -74,7 +74,7 @@ class MaintenanceDetailsController {
       const { societyId } = req.params;
       const result = await maintenanceDetailsModel.model.find({societyId : societyId ,penaltyAmount: { $gt: 0 } }).populate([{ path: "memberId", populate: { path: "userId" } }, { path: "maintenanceId" }]);
       if (!result || result.length === 0) {
-        return res.status(404).send({ message: "No due maintenance found" });
+        return res.status(405).send({ message: "No due maintenance found" });
       }
       return res.status(200).send({ message: httpSuccess, data: result });
     } catch (error) {
@@ -88,7 +88,7 @@ class MaintenanceDetailsController {
       const { memberId } = req.params;
       const result = await maintenanceDetailsModel.model.find({ memberId: memberId, penaltyAmount: { $gt: 0 } }).populate({ path: "memberId", populate: { path: "userId" } });
       if (!result || result.length === 0) {
-        return res.status(404).send({ message: "No pending maintenance found" });
+        return res.status(405).send({ message: "No pending maintenance found" });
       }
       return res.status(200).send({ message: httpSuccess, data: result });
     } catch (error) {
@@ -115,7 +115,7 @@ class MaintenanceDetailsController {
       const result = await maintenanceDetailsModel.model.find({societyId : societyId});
 
       if (!result || result.length === 0) {
-        return res.status(404).send({ message: 'No maintenance records found' });
+        return res.status(405).send({ message: 'No maintenance records found' });
       }
 
       let MaintenanceAmount = 0;
@@ -139,7 +139,7 @@ class MaintenanceDetailsController {
       const result = await maintenanceDetailsModel.model.find();
 
       if (!result || result.length === 0) {
-        return res.status(404).send({ message: 'No maintenance records found' });
+        return res.status(405).send({ message: 'No maintenance records found' });
       }
 
       let totalPenaltyAmount = 0;
@@ -162,8 +162,8 @@ class MaintenanceDetailsController {
     try {
       const {memberId} = req.params
       const maintenanceDetails = await maintenanceDetailsModel.model.find({memberId : memberId})
-      const pendingMaintenance = await maintenanceDetailsModel.model.find({ memberId: memberId, penaltyAmount: { $gt: 0 } });
-      const dueMaintenance = await maintenanceDetailsModel.model.find({ memberId: memberId, paymentStatus:"Pending"});
+      const pendingMaintenance = await maintenanceDetailsModel.model.find({ memberId: memberId, penaltyAmount: 0, paymentStatus:"Pending" });
+      const dueMaintenance = await maintenanceDetailsModel.model.find({ memberId: memberId, paymentStatus:"Pending", penaltyAmount: { $gt: 0 }});
 
       const responseData = {
         maintenance : maintenanceDetails,
@@ -176,7 +176,6 @@ class MaintenanceDetailsController {
       return res.status(500).send({ message: 'Internal Server Error' });
     }
   }
-
 
   async updateMaintenanceDetails(req, res) {
     try {

@@ -36,7 +36,7 @@ class WingController {
       // Fetch wings associated with societyId
       const result = await wingModel.model.find({ societyId: societyId })
       if (!result || result.length === 0) {
-        return res.status(404).send({ message: "No wings found for this society." })
+        return res.status(405).send({ message: "No wings found for this society." })
       }
 
       return res.status(200).send({ message: httpSuccess, data: result })
@@ -58,7 +58,7 @@ class WingController {
       // Fetch wing by ID
       const result = await wingModel.model.findOne({ _id: id })
       if (!result) {
-        return res.status(404).send({ message: "Wing not found." })
+        return res.status(405).send({ message: "Wing not found." })
       }
 
       return res.status(200).send({ message: httpSuccess, data: result })
@@ -80,7 +80,7 @@ class WingController {
       // Delete wing by ID
       const result = await wingModel.model.deleteOne({ _id: id })
       if (!result || result.deletedCount <= 0) {
-        return res.status(404).send({ message: "Wing not found or already deleted." })
+        return res.status(405).send({ message: "Wing not found or already deleted." })
       }
 
       return res.status(200).send({ message: "Wing deleted successfully." })

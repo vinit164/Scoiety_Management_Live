@@ -29,7 +29,7 @@ class ComplaintController {
       }
       const result = await complaintModel.model.updateOne({ _id: id }, { ...req.body });
       if (!result || result.modifiedCount === 0) {
-        return res.status(404).json({ message: "Complaint not found or no changes were made." });
+        return res.status(405).json({ message: "Complaint not found or no changes were made." });
       }
 
       return res.status(200).json({ message: httpSuccess });
@@ -48,7 +48,7 @@ class ComplaintController {
 
       const result = await complaintModel.model.deleteOne({ _id: id });
       if (!result || result.deletedCount === 0) {
-        return res.status(404).json({ message: "Complaint not found or already deleted." });
+        return res.status(405).json({ message: "Complaint not found or already deleted." });
       }
 
       return res.status(200).json({ message: httpSuccess });
@@ -68,7 +68,7 @@ class ComplaintController {
       const result = await complaintModel.model.find({ societyId, complaintype: type }).populate([{ path: "wingId" }, { path: "unitId" },]);
 
       if (!result || result.length === 0) {
-        return res.status(404).json({ message: "No complaints found for the given society and type." });
+        return res.status(405).json({ message: "No complaints found for the given society and type." });
       }
 
       return res.status(200).json({ message: httpSuccess, data: result });
@@ -87,7 +87,7 @@ class ComplaintController {
 
       const result = await complaintModel.model.find({ societyId, complaintype: "Complain" });
       if (!result || result.length === 0) {
-        return res.status(404).json({ message: "No complaints found for the given society." });
+        return res.status(405).json({ message: "No complaints found for the given society." });
       }
 
       return res.status(200).json({ message: httpSuccess, data: result });
@@ -106,7 +106,7 @@ class ComplaintController {
 
       const result = await complaintModel.model.find({ societyId, complaintype: "Request" });
       if (!result || result.length === 0) {
-        return res.status(404).json({ message: "No requests found for the given society." });
+        return res.status(405).json({ message: "No requests found for the given society." });
       }
 
       return res.status(200).json({ message: httpSuccess, data: result });
@@ -127,7 +127,7 @@ class ComplaintController {
 
       const result = await complaintModel.model.findOne({ memberId });
       if (!result) {
-        return res.status(404).json({ message: "Complaint not found for the given member ID." });
+        return res.status(405).json({ message: "Complaint not found for the given member ID." });
       }
 
       return res.status(200).json({ message: httpSuccess, data: result });

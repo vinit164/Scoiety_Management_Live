@@ -24,6 +24,7 @@ const visitorRouter = require('./routes/VisitorRouter')
 const facilityRouter = require('./routes/FacilityRouter')
 const { extractPublicId, httpSuccess } = require('./constents')
 const { cloudinary } = require('./cloudinaryConfig')
+const bodyParser = require('body-parser');
 
 dotenv.config()
 const app = express()
@@ -33,7 +34,7 @@ const app = express()
 // }))
 app.use(cors({
   origin: function(origin, callback) {
-    const allowedOrigins = ['http://localhost:5173', 'https://your-production-url.com'];
+    const allowedOrigins = ['http://localhost:5173', 'https://scoietymanagement-server.onrender.com', 'https://webapp.adtechifyinfotech.com'];
     if (allowedOrigins.includes(origin) || !origin) {
       callback(null, true);
     } else {
@@ -42,7 +43,9 @@ app.use(cors({
   },
   credentials: true,
 }));
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
 app.use(session({
   secret: 'keyboard cat',

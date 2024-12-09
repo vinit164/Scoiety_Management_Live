@@ -35,7 +35,7 @@ class SocietyController {
     try {
       const result = await societyModel.model.find();
       if (!result || result.length === 0) {
-        return res.status(404).send({ message: "No societies found." });
+        return res.status(405).send({ message: "No societies found." });
       }
       return res.status(200).send({ message: httpSuccess, data: result });
     } catch (error) {
@@ -49,7 +49,7 @@ class SocietyController {
       const { id } = req.params;
       const result = await societyModel.model.findOne({ _id: id });
       if (!result) {
-        return res.status(404).send({ message: "Society not found." });
+        return res.status(405).send({ message: "Society not found." });
       }
       return res.status(200).send({ message: httpSuccess, data: result });
     } catch (error) {
@@ -65,7 +65,7 @@ class SocietyController {
       // Check if society exists
       const society = await societyModel.model.findById(id);
       if (!society) {
-        return res.status(404).send({ message: "Society not found." });
+        return res.status(405).send({ message: "Society not found." });
       }
 
       // Delete related wings and units

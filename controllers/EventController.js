@@ -44,7 +44,7 @@ class EventController {
       const { societyId } = req.params;
       const events = await eventModel.model.find({ societyId: societyId });
       if (!events || events.length === 0) {
-        return res.status(404).send({ message: "No events found" });
+        return res.status(405).send({ message: "No events found" });
       }
 
       let MemberCount = await memberModel.model.countDocuments({ societyId: societyId });
@@ -65,7 +65,7 @@ class EventController {
       const { eventId } = req.params;
       const result = await eventModel.model.findById(eventId);
       if (!result) {
-        return res.status(404).send({ message: "Event not found" });
+        return res.status(405).send({ message: "Event not found" });
       }
       return res.status(200).send({ message: httpSuccess, data: result });
     } catch (error) {

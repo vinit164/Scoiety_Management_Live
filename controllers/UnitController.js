@@ -17,13 +17,13 @@ class UnitController {
       }
       const societyData = await societyModel.model.findOne({ _id: societyId })
       if (!societyData) {
-        return res.status(404).send({ message: "Society not found." })
+        return res.status(405).send({ message: "Society not found." })
       }
 
       // Fetch wings related to the society
       const wings = await wingModel.model.find({ societyId: societyId }).populate('societyId')
       if (!wings || wings.length === 0) {
-        return res.status(404).send({ message: "No wings found for the specified society." })
+        return res.status(405).send({ message: "No wings found for the specified society." })
       }
 
       let Block
@@ -81,7 +81,7 @@ class UnitController {
       // Fetch units associated with the given wingId
       const result = await unitModel.model.find({ wingId: wingId }).populate({ path: "wingId" })
       if (!result || result.length === 0) {
-        return res.status(404).send({ message: "No units found for the specified wing." })
+        return res.status(405).send({ message: "No units found for the specified wing." })
       }
 
       return res.status(200).send({ message: httpSuccess, data: result })
@@ -103,7 +103,7 @@ class UnitController {
       // Fetch unit by ID
       const result = await unitModel.model.findOne({ _id: id })
       if (!result) {
-        return res.status(404).send({ message: "Unit not found." })
+        return res.status(405).send({ message: "Unit not found." })
       }
 
       return res.status(200).send({ message: httpSuccess, data: result })
@@ -125,7 +125,7 @@ class UnitController {
       // Delete unit by ID
       const result = await unitModel.model.deleteOne({ _id: id })
       if (!result || result.deletedCount <= 0) {
-        return res.status(404).send({ message: "Unit not found or already deleted." })
+        return res.status(405).send({ message: "Unit not found or already deleted." })
       }
 
       return res.status(200).send({ message: "Unit deleted successfully." })

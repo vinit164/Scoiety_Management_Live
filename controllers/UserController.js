@@ -25,12 +25,12 @@ class UserController {
         const phone = Number(email);
         user = await userModel.model.findOne({ phoneNumber: phone });
         if (!user) {
-          return res.status(404).send({ message: "User not found with this phone number" });
+          return res.status(405).send({ message: "User not found with this phone number" });
         }
       } else {
         user = await userModel.model.findOne({ email: email });
         if (!user) {
-          return res.status(404).send({ message: "User not found with this email" });
+          return res.status(405).send({ message: "User not found with this email" });
         }
       }
 
@@ -73,7 +73,7 @@ class UserController {
       const { email } = req.body;
       const user = await userModel.model.findOne({ email: email });
 
-      if (!user) return res.status(404).json({ message: 'User not found.' });
+      if (!user) return res.status(405).json({ message: 'User not found.' });
 
       const otp = generateOtp();
       user.otp = otp;
@@ -119,7 +119,7 @@ class UserController {
       const user = await userModel.model.findOne({ email: email });
 
       if (!user) {
-        return res.status(404).json({ message: 'User not found.' });
+        return res.status(405).json({ message: 'User not found.' });
       }
 
       const hashedPassword = await bcrypt.hash(newPassword, 10);
@@ -140,7 +140,7 @@ class UserController {
 
       const user = await userModel.model.findById(userId);
       if (!user) {
-        return res.status(404).json({ message: "User not found." });
+        return res.status(405).json({ message: "User not found." });
       }
 
       const updateData = {};
@@ -157,7 +157,7 @@ class UserController {
       if (user.role === "Chairman" && societyId) {
         const societyHandler = await societyHandlerModel.model.findOne({ userId: userId });
         if (!societyHandler) {
-          return res.status(404).json({ message: "Society not assigned to this user." });
+          return res.status(405).json({ message: "Society not assigned to this user." });
         }
 
         const updateSocietyHandlerData = { selectSociety: societyId };
@@ -166,7 +166,7 @@ class UserController {
 
         const society = await societyModel.model.findById(societyId);
         if (!society) {
-          return res.status(404).json({ message: "Society not found." });
+          return res.status(405).json({ message: "Society not found." });
         }
 
 

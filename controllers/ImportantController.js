@@ -33,7 +33,7 @@ class ImportantController {
       // Fetch all worker details
       const result = await importantModal.model.find();
       if (!result || result.length === 0) {
-        return res.status(404).send({ message: 'No worker details found.' });
+        return res.status(405).send({ message: 'No worker details found.' });
       }
 
       return res.status(200).send({ message: httpSuccess, data: result });
@@ -58,7 +58,7 @@ class ImportantController {
       const result = await importantModal.model.deleteOne({ _id: id });
 
       if (result.deletedCount === 0) {
-        return res.status(404).send({ message: 'Worker not found or already deleted.' });
+        return res.status(405).send({ message: 'Worker not found or already deleted.' });
       }
 
       return res.status(200).send({ message: httpSuccess });
@@ -83,7 +83,7 @@ class ImportantController {
 
       // Check if the update was successful
       if (result.modifiedCount === 0) {
-        return res.status(404).send({ message: 'Worker not found or no changes made.' });
+        return res.status(405).send({ message: 'Worker not found or no changes made.' });
       }
 
       return res.status(200).send({ message: httpSuccess });

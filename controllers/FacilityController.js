@@ -32,7 +32,7 @@ class FacilityController {
 
       const result = await facilityModel.model.find({ societyId: societyId });
       if (!result || result.length === 0) {
-        return res.status(404).send({ message: 'No facilities found for the given society' });
+        return res.status(405).send({ message: 'No facilities found for the given society' });
       }
 
       return res.status(200).send({ message: httpSuccess, data: result });
@@ -52,7 +52,7 @@ class FacilityController {
 
       const result = await facilityModel.model.updateOne({ _id: id }, { ...req.body });
       if (!result || result.modifiedCount === 0) {
-        return res.status(404).send({ message: 'Facility not found or no changes made' });
+        return res.status(405).send({ message: 'Facility not found or no changes made' });
       }
 
       return res.status(200).send({ message: httpSuccess });

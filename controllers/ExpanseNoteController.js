@@ -27,7 +27,7 @@ class ExpanseNoteController {
       }
       const result = await expanseNoteModel.model.find({ societyId });
       if (!result || result.length === 0) {
-        return res.status(404).send({ message: 'No notes found for the given society' });
+        return res.status(405).send({ message: 'No notes found for the given society' });
       }
       return res.status(200).send({ message: httpSuccess, data: result });
     } catch (error) {
@@ -44,7 +44,7 @@ class ExpanseNoteController {
       }
       const result = await expanseNoteModel.model.findOne({ _id: id });
       if (!result) {
-        return res.status(404).send({ message: 'Note not found' });
+        return res.status(405).send({ message: 'Note not found' });
       }
       return res.status(200).send({ message: httpSuccess, data: result });
     } catch (error) {
@@ -61,7 +61,7 @@ class ExpanseNoteController {
       }
       const result = await expanseNoteModel.model.updateOne({ _id: id }, { ...req.body });
       if (!result || result.modifiedCount === 0) {
-        return res.status(404).send({ message: 'Note not found or no changes made' });
+        return res.status(405).send({ message: 'Note not found or no changes made' });
       }
       return res.status(200).send({ message: httpSuccess });
     } catch (error) {
@@ -78,7 +78,7 @@ class ExpanseNoteController {
       }
       const result = await expanseNoteModel.model.deleteOne({ _id: id });
       if (!result || result.deletedCount === 0) {
-        return res.status(404).send({ message: 'Note not found or already deleted' });
+        return res.status(405).send({ message: 'Note not found or already deleted' });
       }
       return res.status(200).send({ message: httpSuccess });
     } catch (error) {
